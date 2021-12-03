@@ -4,13 +4,15 @@
 /// default constructor
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ 700, 600 }, "SFML Starter" }
+	m_window{ sf::VideoMode{ 700, 600 }, "SFML Starter" }, m_player{ sf::Color::Red, 75 }, m_ai{ sf::Color::Yellow, 75 }
 {
 	m_font.loadFromFile("Assets/CaviarDreams.ttf");
 
+	int boardIndex{};
 	for (auto& board : m_boards)
 	{
-		board = new Board();
+		board = new Board(boardIndex);
+		++boardIndex;
 	}
 
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
@@ -87,7 +89,7 @@ void Game::processEvents()
 /// <param name="t_deltaTime">frame time</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	m_currentBoard->update(t_deltaTime, &m_window);
+	m_currentBoard->placement(&m_window, &m_player);
 
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
 	{
@@ -111,6 +113,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_currentBoard->render(&m_window);
+	m_player.render(&m_window, m_currentBoard->index());
 
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
 	{

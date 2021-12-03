@@ -21,6 +21,8 @@ private:
 	sf::RenderWindow m_window;
 	std::array<Board*, 4> m_boards;
 	Board* m_currentBoard;
+	Piece m_player;
+	Piece m_ai;
 
 	sf::Font m_font;
 

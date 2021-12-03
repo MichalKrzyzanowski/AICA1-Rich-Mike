@@ -1,7 +1,9 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board(int index)
 {
+	m_index = index;
+
 	for (size_t i = 0; i < 4; i++)
 	{
 		for (size_t j = 0; j < 4; j++)
@@ -17,13 +19,21 @@ Board::Board()
 
 void Board::update(sf::Time dt, sf::RenderWindow* window)
 {
+	
+}
+
+void Board::placement(sf::RenderWindow* window, Piece* piece)
+{
 	for (size_t i = 0; i < 4; i++)
 	{
 		for (size_t j = 0; j < 4; j++)
 		{
 			if (m_boardTiles.at(i).at(j).getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window))))
 			{
-				// do placement here
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+				{
+					piece->addPosition(PieceData{ i,j,m_index });
+				}
 			}
 		}
 	}
