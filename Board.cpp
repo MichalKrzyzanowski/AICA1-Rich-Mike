@@ -49,3 +49,16 @@ void Board::render(sf::RenderWindow* window)
 		}
 	}
 }
+
+void Board::resetOwner()
+{
+	for (size_t i = 0; i < 4; i++)
+	{
+		for (size_t j = 0; j < 4; j++)
+		{
+			m_boardTiles.at(i).at(j)->owner() = PieceCheck::NONE;
+		}
+	}
+}
+
+

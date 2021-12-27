@@ -3,6 +3,7 @@
 
 #include <array>
 #include "Piece.h"
+#include "PieceCheck.h"
 #include "Tile.h"
 #include <SFML/Graphics.hpp>
 
@@ -18,6 +19,7 @@ public:
 	void update(sf::Time dt, sf::RenderWindow* window);
 	bool placement(sf::RenderWindow* window, Piece* piece);
 	void render(sf::RenderWindow* window);
+	void resetOwner();
 
 	int index() { return m_index; }
 	PieceCheck owner(int row, int col) { return m_boardTiles.at(row).at(col)->owner(); }

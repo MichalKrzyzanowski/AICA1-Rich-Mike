@@ -10,6 +10,16 @@
 class Game
 {
 public:
+
+	enum GameState
+	{
+		PLAYER_TURN,
+		AI_TURN,
+		PLAYER_WIN,
+		AI_WIN,
+		NONE,
+	};
+
 	Game();
 	~Game();
 	void run();
@@ -18,7 +28,6 @@ private:
 	void processEvents();
 	void update(sf::Time t_deltaTime);
 	void render();
-	void checkWin();
 
 	sf::RenderWindow m_window;
 	std::array<Board*, 4> m_boards;
@@ -34,6 +43,14 @@ private:
 	std::array<sf::Text, 4> m_boardSwitchTexts;
 
 	sf::RectangleShape* m_currentBoardButton;
+
+	GameState m_currentState = PLAYER_TURN;
+
+	sf::RectangleShape m_gameOverBox;
+	sf::Text m_gameOverText;
+
+	sf::RectangleShape m_restartButton;
+	sf::Text m_restartText;
 };
 
 #endif // !GAME_H
