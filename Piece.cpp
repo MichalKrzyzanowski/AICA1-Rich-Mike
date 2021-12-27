@@ -167,9 +167,35 @@ bool Piece::checkWin(std::array<Board*, 4> boards)
 {
 	bool win{ false };
 
-	win = checkHorizontal(boards);
-	win = checkVertical(boards);
-	win = checkDiagonal(boards);
+	if ((win = checkHorizontal(boards)))
+	{
+		return win;
+	}
+	if ((win = checkVertical(boards)))
+	{
+		return win;
+	}
+	if ((win = checkDiagonal(boards)))
+	{
+		return win;
+	}
+
+	if ((win = check3DHorizontal(boards)))
+	{
+		return win;
+	}
+	if ((win = check3DVertical(boards)))
+	{
+		return win;
+	}
+	if ((win = check3DDiagonal(boards)))
+	{
+		return win;
+	}
+	if ((win = check3DStack(boards)))
+	{
+		return win;
+	}
 
 	return win;
 }

@@ -91,7 +91,10 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_currentBoard->placement(&m_window, &m_player))
 	{
-		m_player.checkWin(m_boards);
+		if (m_player.checkWin(m_boards))
+		{
+			std::cout << "you Win!\n";
+		}
 	}
 
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
@@ -125,8 +128,4 @@ void Game::render()
 	}
 
 	m_window.display();
-}
-
-void Game::checkWin()
-{
 }
