@@ -1,5 +1,8 @@
-#pragma once
+#ifndef PIECE_H
+#define PIECE_H
+
 #include <SFML/Graphics.hpp>
+#include "PieceCheck.h"
 
 struct PieceData
 {
@@ -8,16 +11,35 @@ struct PieceData
 	int boardIndex;
 };
 
+class Board;
+
 class Piece
 {
 private:
 	sf::CircleShape m_piece;
 	std::vector<PieceData> m_positions;
+	PieceData* m_currentPosition{ nullptr };
+	PieceCheck m_type;
+
+private:
+	bool checkHorizontal(std::array<Board*, 4> boards);
+	bool checkVertical(std::array<Board*, 4> boards);
+	bool checkDiagonal(std::array<Board*, 4> boards);
+	bool check3DHorizontal(std::array<Board*, 4> boards);
+	bool check3DVertical(std::array<Board*, 4> boards);
+	bool check3DDiagonal(std::array<Board*, 4> boards);
+	bool check3DStack(std::array<Board*, 4> boards);
 
 public:
-	Piece(sf::Color t_color, float t_radius) { m_piece.setFillColor(t_color); m_piece.setRadius(t_radius); }
-	void addPosition(PieceData t_data) { m_positions.push_back(t_data); };
+	Piece(sf::Color t_color, float t_radius, PieceCheck type);
+	void addPosition(PieceData t_data);
 	void render(sf::RenderWindow* t_window, int t_currentBoardIndex);
 	void resetPositions() { m_positions.clear(); }
+	bool checkWin(std::array<Board*, 4> boards);
+
+	PieceCheck type() { return m_type; }
 };
 
+#include "Board.h"
+
+#endif // !PIECE_H
