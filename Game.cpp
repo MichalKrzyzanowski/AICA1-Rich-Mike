@@ -107,7 +107,36 @@ void Game::processEvents()
 /// <param name="t_deltaTime">frame time</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	if (m_currentState == PLAYER_TURN)
+	if (m_currentState == AI_TURN)
+	{
+		if (m_currentBoard->placement(&m_window, &m_ai))
+		{
+			if (m_ai.checkWin(m_boards))
+			{
+				m_gameOverText.setString("AI Wins!");
+				m_currentState = AI_WIN;
+			}
+			else
+			{
+				m_currentState = PLAYER_TURN;
+			}
+		}
+
+		for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
+		{
+			if (m_boardSwitchButtons[i].getGlobalBounds().contains(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window))))
+			{
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+				{
+					m_currentBoardButton->setFillColor(sf::Color::White);
+					m_currentBoardButton = &m_boardSwitchButtons[i];
+					m_currentBoardButton->setFillColor(m_selectedBoardColor);
+					m_currentBoard = m_boards.at(i);
+				}
+			}
+		}
+	}
+	else if (m_currentState == PLAYER_TURN)
 	{
 		if (m_currentBoard->placement(&m_window, &m_player))
 		{
@@ -115,6 +144,10 @@ void Game::update(sf::Time t_deltaTime)
 			{
 				m_gameOverText.setString("You Win!");
 				m_currentState = PLAYER_WIN;
+			}
+			else
+			{
+				m_currentState = AI_TURN;
 			}
 		}
 
@@ -139,6 +172,7 @@ void Game::update(sf::Time t_deltaTime)
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 			{
 				m_player.resetPositions();
+				m_ai.resetPositions();
 
 				for (auto& board : m_boards)
 				{
@@ -150,6 +184,35 @@ void Game::update(sf::Time t_deltaTime)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
 			m_player.resetPositions();
+			m_ai.resetPositions();
+
+			for (auto& board : m_boards)
+			{
+				board->resetOwner();
+			}
+			m_currentState = PLAYER_TURN;
+		}
+	}
+	else if (m_currentState == AI_WIN)
+	{
+		if (m_restartButton.getGlobalBounds().contains(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window))))
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			{
+				m_player.resetPositions();
+				m_ai.resetPositions();
+
+				for (auto& board : m_boards)
+				{
+					board->resetOwner();
+				}
+				m_currentState = PLAYER_TURN;
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			m_player.resetPositions();
+			m_ai.resetPositions();
 
 			for (auto& board : m_boards)
 			{
@@ -168,6 +231,7 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_currentBoard->render(&m_window);
 	m_player.render(&m_window, m_currentBoard->index());
+	m_ai.render(&m_window, m_currentBoard->index());
 
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
 	{
@@ -175,7 +239,7 @@ void Game::render()
 		m_window.draw(m_boardSwitchTexts[i]);
 	}
 
-	if (m_currentState == PLAYER_WIN)
+	if (m_currentState == PLAYER_WIN || m_currentState == AI_WIN)
 	{
 		m_window.draw(m_gameOverBox);
 		m_window.draw(m_gameOverText);
