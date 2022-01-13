@@ -26,7 +26,7 @@ Move AiAlg::getBestMove(GameState t_currentState, std::array<Board*, 4> t_boards
         newMove.x = t_move.x;
         newMove.y = t_move.y;
         newMove.z = t_move.z;
-        newMove.score = 12; // Call evaluate here
+        newMove.score = evaluate(t_currentState, &newMove, t_boards); // Call evaluate here
 
         return newMove;
     }
@@ -102,6 +102,13 @@ int AiAlg::evaluate(GameState t_currentState, Move* currentMove, std::array<Boar
     finalScore = compareScores(t_currentState, evaluate3DVertical(t_currentState, currentMove, boards), finalScore);
     finalScore = compareScores(t_currentState, evaluate3DDiagonal(t_currentState, currentMove, boards), finalScore);
     finalScore = compareScores(t_currentState, evaluate3DStack(currentMove, boards), finalScore);
+
+    if (finalScore > 0)
+    {
+        printf("YES!!");
+    }
+
+    return finalScore;
 }
 
 int AiAlg::evaluateHorizontal(Move* currentMove, std::array<Board*, 4> boards)
