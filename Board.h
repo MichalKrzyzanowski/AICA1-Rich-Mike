@@ -3,7 +3,7 @@
 
 #include <array>
 #include "Piece.h"
-#include "PieceCheck.h"
+#include "Globals.h"
 #include "Tile.h"
 #include <SFML/Graphics.hpp>
 
@@ -23,6 +23,7 @@ public:
 
 	int index() { return m_index; }
 	PieceCheck owner(int row, int col) { return m_boardTiles.at(row).at(col)->owner(); }
+	Tile* getTile(int row, int col) { return m_boardTiles.at(row).at(col); }
 };
 
 #endif // !BOARD_H

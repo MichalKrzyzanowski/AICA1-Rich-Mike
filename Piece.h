@@ -2,7 +2,7 @@
 #define PIECE_H
 
 #include <SFML/Graphics.hpp>
-#include "PieceCheck.h"
+#include "Globals.h"
 
 struct PieceData
 {

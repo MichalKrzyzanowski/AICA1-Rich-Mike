@@ -26,7 +26,7 @@ bool Board::placement(sf::RenderWindow* window, Piece* piece)
 		{
 			if (m_boardTiles.at(i).at(j)->rect().getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window))))
 			{
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && m_boardTiles.at(i).at(j)->owner() == PieceCheck::NONE)
 				{
 					m_boardTiles.at(i).at(j)->owner() = piece->type();
 					piece->addPosition(PieceData{ i, j, m_index });

@@ -5,21 +5,12 @@
 #include <iostream>
 #include <array>
 #include "Board.h"
-#include "PieceCheck.h"
+#include "Globals.h"
+#include "AiAlg.h"
 
 class Game
 {
 public:
-
-	enum GameState
-	{
-		PLAYER_TURN,
-		AI_TURN,
-		PLAYER_WIN,
-		AI_WIN,
-		NONE,
-	};
-
 	Game();
 	~Game();
 	void run();
@@ -34,6 +25,8 @@ private:
 	Board* m_currentBoard;
 	Piece m_player;
 	Piece m_ai;
+
+	AiAlg m_aiAlg;
 
 	sf::Font m_font;
 
