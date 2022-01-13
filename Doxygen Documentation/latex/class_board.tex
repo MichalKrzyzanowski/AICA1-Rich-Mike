@@ -1,0 +1,97 @@
+\hypertarget{class_board}{}\doxysection{Board Class Reference}
+\label{class_board}\index{Board@{Board}}
+
+
+class that represents a single game board  
+
+
+
+
+{\ttfamily \#include $<$Board.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_board_a58edf98349df781abe0eae0f5cc683ab}{Board}} (int index)
+\begin{DoxyCompactList}\small\item\em init the board \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_board_a0cc0470d71c91bfe7b67b92830983a29}{placement}} (sf\+::\+Render\+Window $\ast$window, \mbox{\hyperlink{class_piece}{Piece}} $\ast$piece)
+\begin{DoxyCompactList}\small\item\em function that places a given piece on the board \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_board_ac7cc50251247c0c63e84332acfab8118}{render}} (sf\+::\+Render\+Window $\ast$window)
+\begin{DoxyCompactList}\small\item\em render the board \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_board_a42191cd858115193c1c8dd40fb803423}\label{class_board_a42191cd858115193c1c8dd40fb803423}} 
+void {\bfseries reset\+Owner} ()
+\begin{DoxyCompactList}\small\item\em reset all tile owners \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_board_ac0bf1a012f4530b413787cd66ff288b3}\label{class_board_ac0bf1a012f4530b413787cd66ff288b3}} 
+int {\bfseries index} ()
+\item 
+\mbox{\Hypertarget{class_board_af5b3e03fc25bebe0a16d2febf389a1b3}\label{class_board_af5b3e03fc25bebe0a16d2febf389a1b3}} 
+Piece\+Check {\bfseries owner} (int row, int col)
+\item 
+\mbox{\Hypertarget{class_board_a75f854fc2919b8583100b1cf8d6f06cd}\label{class_board_a75f854fc2919b8583100b1cf8d6f06cd}} 
+\mbox{\hyperlink{class_tile}{Tile}} $\ast$ {\bfseries get\+Tile} (int row, int col)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+class that represents a single game board 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_board_a58edf98349df781abe0eae0f5cc683ab}\label{class_board_a58edf98349df781abe0eae0f5cc683ab}} 
+\index{Board@{Board}!Board@{Board}}
+\index{Board@{Board}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{Board()}{Board()}}
+{\footnotesize\ttfamily Board\+::\+Board (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+init the board 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & board index in the array of boards\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_board_a0cc0470d71c91bfe7b67b92830983a29}\label{class_board_a0cc0470d71c91bfe7b67b92830983a29}} 
+\index{Board@{Board}!placement@{placement}}
+\index{placement@{placement}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{placement()}{placement()}}
+{\footnotesize\ttfamily bool Board\+::placement (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window $\ast$}]{window,  }\item[{\mbox{\hyperlink{class_piece}{Piece}} $\ast$}]{piece }\end{DoxyParamCaption})}
+
+
+
+function that places a given piece on the board 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & current SFML window\\
+\hline
+{\em piece} & piece to place\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_board_ac7cc50251247c0c63e84332acfab8118}\label{class_board_ac7cc50251247c0c63e84332acfab8118}} 
+\index{Board@{Board}!render@{render}}
+\index{render@{render}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Board\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+render the board 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & current SFML window\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Board.\+h\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Board.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,56 @@
+\hypertarget{_game_8h_source}{}\doxysection{Game.\+h}
+\label{_game_8h_source}\index{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Game.h@{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Game.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef GAME\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define GAME\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <SFML/Graphics.hpp>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Board.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}Globals.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}AiAlg.h"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_game}{Game}}}
+\DoxyCodeLine{12 \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_game_ad59df6562a58a614fda24622d3715b65}{Game}}();}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_game}{\string~Game}}();}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_game_a1ab78f5ed0d5ea879157357cf2fb2afa}{run}}();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} processEvents();}
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} update(sf::Time t\_deltaTime);}
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} render();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     sf::RenderWindow m\_window;}
+\DoxyCodeLine{24     std::array<Board*, 4> m\_boards;}
+\DoxyCodeLine{25     \mbox{\hyperlink{class_board}{Board}}* m\_currentBoard;}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_piece}{Piece}} m\_player;}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_piece}{Piece}} m\_ai;}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \mbox{\hyperlink{class_ai_alg}{AiAlg}} m\_aiAlg;}
+\DoxyCodeLine{30     \textcolor{keywordtype}{int} m\_difficulty;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     sf::Font m\_font;}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     sf::Color m\_selectedBoardColor\{ 227, 189, 0 \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     std::array<sf::RectangleShape, 4> m\_boardSwitchButtons;}
+\DoxyCodeLine{37     std::array<sf::Text, 4> m\_boardSwitchTexts;}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     sf::RectangleShape* m\_currentBoardButton;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     GameState m\_currentState = PLAYER\_TURN;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     sf::RectangleShape m\_gameOverBox;}
+\DoxyCodeLine{44     sf::Text m\_gameOverText;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     sf::RectangleShape m\_restartButton;}
+\DoxyCodeLine{47     sf::Text m\_restartText;}
+\DoxyCodeLine{48 \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !GAME\_H}}
+
+\end{DoxyCode}

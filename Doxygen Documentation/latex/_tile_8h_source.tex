@@ -1,0 +1,27 @@
+\hypertarget{_tile_8h_source}{}\doxysection{Tile.\+h}
+\label{_tile_8h_source}\index{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Tile.h@{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Tile.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TILE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TILE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <SFML/Graphics.hpp>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}Globals.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_tile}{Tile}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{private}:}
+\DoxyCodeLine{13     sf::RectangleShape m\_rect;}
+\DoxyCodeLine{14     PieceCheck m\_owner\{ PieceCheck::NONE \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_tile}{Tile}}(\textcolor{keywordtype}{float} width, \textcolor{keywordtype}{int} row, \textcolor{keywordtype}{int} col);}
+\DoxyCodeLine{18     PieceCheck\& owner() \{ \textcolor{keywordflow}{return} m\_owner; \}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     sf::RectangleShape\& rect() \{ \textcolor{keywordflow}{return} m\_rect; \}}
+\DoxyCodeLine{21 \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !TILE\_H}}
+\DoxyCodeLine{24 }
+
+\end{DoxyCode}

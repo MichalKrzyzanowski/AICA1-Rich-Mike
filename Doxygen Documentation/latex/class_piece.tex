@@ -1,0 +1,112 @@
+\hypertarget{class_piece}{}\doxysection{Piece Class Reference}
+\label{class_piece}\index{Piece@{Piece}}
+
+
+class that allows the user/ai to place a piece on any board  
+
+
+
+
+{\ttfamily \#include $<$Piece.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_piece_aeb53b80b84e4c5f61fe182a764bc3936}{Piece}} (sf\+::\+Color t\+\_\+color, float t\+\_\+radius, Piece\+Check type)
+\begin{DoxyCompactList}\small\item\em init a piece \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_piece_ad6dc9f7fe26f88e8b17b1d57fccce18c}{add\+Position}} (\mbox{\hyperlink{struct_piece_data}{Piece\+Data}} t\+\_\+data)
+\begin{DoxyCompactList}\small\item\em add a position to the positions vector. this vector draws the same piece in multiple places. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_piece_a63352aeeb50847449d62957883043d60}{render}} (sf\+::\+Render\+Window $\ast$t\+\_\+window, int t\+\_\+current\+Board\+Index)
+\begin{DoxyCompactList}\small\item\em draw the piece at all positions from the positions vector \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_piece_a3566c5f021871ed1a08f50944354088b}\label{class_piece_a3566c5f021871ed1a08f50944354088b}} 
+void {\bfseries reset\+Positions} ()
+\item 
+bool \mbox{\hyperlink{class_piece_a3cc2867b5af0f38593330c34b215a90f}{check\+Win}} (std\+::array$<$ \mbox{\hyperlink{class_board}{Board}} $\ast$, 4 $>$ boards)
+\begin{DoxyCompactList}\small\item\em main win condition function that runs the other win check functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_piece_adac51d02412302b1b3b81a35f3ebf054}\label{class_piece_adac51d02412302b1b3b81a35f3ebf054}} 
+Piece\+Check {\bfseries type} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+class that allows the user/ai to place a piece on any board 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_piece_aeb53b80b84e4c5f61fe182a764bc3936}\label{class_piece_aeb53b80b84e4c5f61fe182a764bc3936}} 
+\index{Piece@{Piece}!Piece@{Piece}}
+\index{Piece@{Piece}!Piece@{Piece}}
+\doxysubsubsection{\texorpdfstring{Piece()}{Piece()}}
+{\footnotesize\ttfamily Piece\+::\+Piece (\begin{DoxyParamCaption}\item[{sf\+::\+Color}]{t\+\_\+color,  }\item[{float}]{t\+\_\+radius,  }\item[{Piece\+Check}]{type }\end{DoxyParamCaption})}
+
+
+
+init a piece 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t\+\_\+color} & piece color\\
+\hline
+{\em t\+\_\+radius} & piece radiu\\
+\hline
+{\em type} & piece type, either ai or player\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_piece_ad6dc9f7fe26f88e8b17b1d57fccce18c}\label{class_piece_ad6dc9f7fe26f88e8b17b1d57fccce18c}} 
+\index{Piece@{Piece}!addPosition@{addPosition}}
+\index{addPosition@{addPosition}!Piece@{Piece}}
+\doxysubsubsection{\texorpdfstring{addPosition()}{addPosition()}}
+{\footnotesize\ttfamily void Piece\+::add\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_piece_data}{Piece\+Data}}}]{t\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+add a position to the positions vector. this vector draws the same piece in multiple places. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t\+\_\+data} & piece data\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_piece_a3cc2867b5af0f38593330c34b215a90f}\label{class_piece_a3cc2867b5af0f38593330c34b215a90f}} 
+\index{Piece@{Piece}!checkWin@{checkWin}}
+\index{checkWin@{checkWin}!Piece@{Piece}}
+\doxysubsubsection{\texorpdfstring{checkWin()}{checkWin()}}
+{\footnotesize\ttfamily bool Piece\+::check\+Win (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{class_board}{Board}} $\ast$, 4 $>$}]{boards }\end{DoxyParamCaption})}
+
+
+
+main win condition function that runs the other win check functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em boards} & vector of boards\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if victory, false if no victory
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_piece_a63352aeeb50847449d62957883043d60}\label{class_piece_a63352aeeb50847449d62957883043d60}} 
+\index{Piece@{Piece}!render@{render}}
+\index{render@{render}!Piece@{Piece}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Piece\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window $\ast$}]{t\+\_\+window,  }\item[{int}]{t\+\_\+current\+Board\+Index }\end{DoxyParamCaption})}
+
+
+
+draw the piece at all positions from the positions vector 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t\+\_\+window} & current SFML window\\
+\hline
+{\em t\+\_\+current\+Board\+Index} & current board\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Piece.\+h\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Piece.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,52 @@
+\hypertarget{class_ai_alg}{}\doxysection{Ai\+Alg Class Reference}
+\label{class_ai_alg}\index{AiAlg@{AiAlg}}
+
+
+controls the AI and performs it\textquotesingle{}s moves  
+
+
+
+
+{\ttfamily \#include $<$Ai\+Alg.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_move}{Move}} \mbox{\hyperlink{class_ai_alg_af054890e4038093773531e3022763928}{execute\+Move}} (std\+::array$<$ \mbox{\hyperlink{class_board}{Board}} $\ast$, 4 $>$ t\+\_\+boards, \mbox{\hyperlink{class_piece}{Piece}} $\ast$t\+\_\+piece, Game\+State \&t\+\_\+current\+State, int t\+\_\+difficulty)
+\begin{DoxyCompactList}\small\item\em Finds and performs the best move available to the AI. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+controls the AI and performs it\textquotesingle{}s moves 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ai_alg_af054890e4038093773531e3022763928}\label{class_ai_alg_af054890e4038093773531e3022763928}} 
+\index{AiAlg@{AiAlg}!executeMove@{executeMove}}
+\index{executeMove@{executeMove}!AiAlg@{AiAlg}}
+\doxysubsubsection{\texorpdfstring{executeMove()}{executeMove()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_move}{Move}} Ai\+Alg\+::execute\+Move (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{class_board}{Board}} $\ast$, 4 $>$}]{t\+\_\+boards,  }\item[{\mbox{\hyperlink{class_piece}{Piece}} $\ast$}]{t\+\_\+piece,  }\item[{Game\+State \&}]{t\+\_\+current\+State,  }\item[{int}]{t\+\_\+difficulty }\end{DoxyParamCaption})}
+
+
+
+Finds and performs the best move available to the AI. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t\+\_\+boards} & all the playable boards in the game.\\
+\hline
+{\em t\+\_\+piece} & the current piece being placed, player being red and the AI yellow.\\
+\hline
+{\em t\+\_\+current\+State} & the current state of the game such as who\textquotesingle{}s turn or win it is.\\
+\hline
+{\em t\+\_\+difficulty} & the maximum depth selected for the difficulty, normal by default.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the move performed
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Ai\+Alg.\+h\item 
+C\+:/\+Users/andri/\+Desktop/\+Fourth Year/\+AICA1-\/\+Rich-\/\+Mike/Ai\+Alg.\+cpp\end{DoxyCompactItemize}

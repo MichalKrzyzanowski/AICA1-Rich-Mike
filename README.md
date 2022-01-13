@@ -9,4 +9,3 @@
 - Internal World Representation
 - Player Interface
 - Evaluation Function
-- Efficiency Considerations

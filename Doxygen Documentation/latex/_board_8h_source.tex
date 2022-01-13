@@ -1,0 +1,35 @@
+\hypertarget{_board_8h_source}{}\doxysection{Board.\+h}
+\label{_board_8h_source}\index{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Board.h@{C:/Users/andri/Desktop/Fourth Year/AICA1-\/Rich-\/Mike/Board.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef BOARD\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define BOARD\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}Piece.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Globals.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Tile.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <SFML/Graphics.hpp>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_board}{Board}}}
+\DoxyCodeLine{14 \{}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \textcolor{keywordtype}{float} m\_tileWidth\{ 150.0f \};}
+\DoxyCodeLine{17     std::array<std::array<Tile*, 4>, 4> m\_boardTiles;}
+\DoxyCodeLine{18     \textcolor{keywordtype}{int} m\_index;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_board_a58edf98349df781abe0eae0f5cc683ab}{Board}}(\textcolor{keywordtype}{int} index);}
+\DoxyCodeLine{22     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_board_a0cc0470d71c91bfe7b67b92830983a29}{placement}}(sf::RenderWindow* window, \mbox{\hyperlink{class_piece}{Piece}}* piece);}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_board_ac7cc50251247c0c63e84332acfab8118}{render}}(sf::RenderWindow* window);}
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_board_a42191cd858115193c1c8dd40fb803423}{resetOwner}}();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{int} index() \{ \textcolor{keywordflow}{return} m\_index; \}}
+\DoxyCodeLine{27     PieceCheck owner(\textcolor{keywordtype}{int} row, \textcolor{keywordtype}{int} col) \{ \textcolor{keywordflow}{return} m\_boardTiles.at(row).at(col)-\/>owner(); \}}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_tile}{Tile}}* getTile(\textcolor{keywordtype}{int} row, \textcolor{keywordtype}{int} col) \{ \textcolor{keywordflow}{return} m\_boardTiles.at(row).at(col); \}}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !BOARD\_H}}
+\DoxyCodeLine{32 }
+
+\end{DoxyCode}
