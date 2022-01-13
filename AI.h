@@ -13,10 +13,10 @@ struct Move
 class AI
 {
 public:
-	Move executeMove(sf::RenderWindow* window, Board* board);
+	Move executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, Game::GameState& t_currentState);
 
 private:
-	Move getBestMove(Game::GameState* t_currentState, Board* board, int t_depth, Move t_move);
+	Move getBestMove(Game::GameState& t_currentState, std::array<Board*, 4> t_boards, int t_depth, Move t_move);
 	int const MAX_DEPTH = 2;
 	std::vector<Move> moves;
 };

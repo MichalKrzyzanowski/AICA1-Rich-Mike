@@ -109,7 +109,7 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_currentState == AI_TURN)
 	{
-		if (m_currentBoard->placement(&m_window, &m_ai))
+		/*if (m_currentBoard->placement(&m_window, &m_ai))
 		{
 			if (m_ai.checkWin(m_boards))
 			{
@@ -134,7 +134,18 @@ void Game::update(sf::Time t_deltaTime)
 					m_currentBoard = m_boards.at(i);
 				}
 			}
+		}*/
+		m_aiAlg.executeMove(&m_window, m_boards, &m_ai, m_currentState);
+		if (m_ai.checkWin(m_boards))
+		{
+			m_gameOverText.setString("AI Wins!");
+			m_currentState = AI_WIN;
 		}
+		else
+		{
+			m_currentState = PLAYER_TURN;
+		}
+
 	}
 	else if (m_currentState == PLAYER_TURN)
 	{

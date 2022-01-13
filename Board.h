@@ -23,6 +23,7 @@ public:
 
 	int index() { return m_index; }
 	PieceCheck owner(int row, int col) { return m_boardTiles.at(row).at(col)->owner(); }
+	Tile* getTile(int row, int col) { return m_boardTiles.at(row).at(col); }
 };
 
 #endif // !BOARD_H

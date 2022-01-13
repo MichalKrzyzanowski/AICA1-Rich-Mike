@@ -6,6 +6,7 @@
 #include <array>
 #include "Board.h"
 #include "PieceCheck.h"
+#include "AI.h"
 
 class Game
 {
@@ -34,6 +35,8 @@ private:
 	Board* m_currentBoard;
 	Piece m_player;
 	Piece m_ai;
+
+	AI m_aiAlg;
 
 	sf::Font m_font;
 
