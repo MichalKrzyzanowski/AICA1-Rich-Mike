@@ -4,7 +4,7 @@
 /// default constructor
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ 700, 600 }, "SFML Starter" }, m_player{ sf::Color::Red, 75, PieceCheck::PLAYER }, m_ai{ sf::Color::Yellow, 75, PieceCheck::AI }
+	m_window{ sf::VideoMode{ 700, 600 }, "SFML Starter" }, m_player{ sf::Color::Red, 75, PieceCheck::PLAYER }, m_ai{ sf::Color::Yellow, 75, PieceCheck::AI }, m_difficulty{1}
 {
 	m_font.loadFromFile("Assets/CaviarDreams.ttf");
 
@@ -99,6 +99,16 @@ void Game::processEvents()
 		{
 			m_window.close();
 		}
+
+		// Switch difficulties
+		if (sf::Keyboard::Num1 == newEvent.key.code)
+		{
+			m_difficulty = 1;	// normal
+		}
+		if (sf::Keyboard::Num2 == newEvent.key.code)
+		{
+			m_difficulty = 2;	// hard
+		}
 	}
 }
 
@@ -109,33 +119,7 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_currentState == AI_TURN)
 	{
-		/*if (m_currentBoard->placement(&m_window, &m_ai))
-		{
-			if (m_ai.checkWin(m_boards))
-			{
-				m_gameOverText.setString("AI Wins!");
-				m_currentState = AI_WIN;
-			}
-			else
-			{
-				m_currentState = PLAYER_TURN;
-			}
-		}
-
-		for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
-		{
-			if (m_boardSwitchButtons[i].getGlobalBounds().contains(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window))))
-			{
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-				{
-					m_currentBoardButton->setFillColor(sf::Color::White);
-					m_currentBoardButton = &m_boardSwitchButtons[i];
-					m_currentBoardButton->setFillColor(m_selectedBoardColor);
-					m_currentBoard = m_boards.at(i);
-				}
-			}
-		}*/
-		m_aiAlg.executeMove(&m_window, m_boards, &m_ai, m_currentState);
+		m_aiAlg.executeMove(&m_window, m_boards, &m_ai, m_currentState, m_difficulty);
 		if (m_ai.checkWin(m_boards))
 		{
 			m_gameOverText.setString("AI Wins!");

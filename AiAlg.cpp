@@ -1,7 +1,8 @@
 #include "AiAlg.h"
 
-Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState)
+Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState, int t_difficulty)
 {
+    MAX_DEPTH = t_difficulty;
     Move bestMove = getBestMove(t_currentState, t_boards, t_piece, 0, Move());
     t_boards.at(bestMove.z)->getTile(bestMove.x, bestMove.y)->owner() = t_piece->type();
     t_piece->addPosition(PieceData{ (unsigned int)bestMove.x, (unsigned int)bestMove.y, bestMove.z });

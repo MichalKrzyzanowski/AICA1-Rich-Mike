@@ -27,6 +27,7 @@ private:
 	Piece m_ai;
 
 	AiAlg m_aiAlg;
+	int m_difficulty;
 
 	sf::Font m_font;
 
