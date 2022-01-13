@@ -90,3 +90,95 @@ Move AiAlg::getBestMove(GameState& t_currentState, std::array<Board*, 4> t_board
 
     return moves[bestMove];
 }
+
+int AiAlg::evaluate(Move* currentMove, std::array<Board*, 4> boards)
+{
+    int tempScore{};
+
+    tempScore = evaluate3DHorizontal(currentMove, boards);
+
+}
+
+int AiAlg::evaluateHorizontal(Move* currentMove, std::array<Board*, 4> boards)
+{
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    if (boards[currentMove->z]->owner(0, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(1, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(2, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(3, currentMove->y) == PieceCheck::AI) ++aiCount;
+
+    if (boards[currentMove->z]->owner(0, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(1, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(2, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(3, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[currentMove->z]->owner(0, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(1, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(2, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(3, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+
+    return calculateEvalScore(playerCount, aiCount, emptyCount);
+}
+
+int AiAlg::evaluateVertical(Move* currentMove, std::array<Board*, 4> boards)
+{
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    if (boards[currentMove->z]->owner(currentMove->x, 0) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 3) == PieceCheck::AI) ++aiCount;
+
+    if (boards[currentMove->z]->owner(currentMove->x, 0) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 3) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[currentMove->z]->owner(currentMove->x, 0) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(currentMove->x, 3) == PieceCheck::NONE) ++emptyCount;
+
+    return calculateEvalScore(playerCount, aiCount, emptyCount);
+}
+
+int AiAlg::evaluateDiagonal(Move* currentMove, std::array<Board*, 4> boards)
+{
+    return 0;
+}
+
+int AiAlg::evaluate3DHorizontal(Move* currentMove, std::array<Board*, 4> boards)
+{
+    return 0;
+}
+
+int AiAlg::evaluate3DVertical(Move* currentMove, std::array<Board*, 4> boards)
+{
+    return 0;
+}
+
+int AiAlg::evaluate3DDiagonal(Move* currentMove, std::array<Board*, 4> boards)
+{
+    return 0;
+}
+
+int AiAlg::evaluate3DStack(Move* currentMove, std::array<Board*, 4> boards)
+{
+    return 0;
+}
+
+int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
+{
+    if (playerCount == 4) return 10;
+    if (playerCount == 3 && emptyCount == 1) return 6;
+    if (playerCount == 2 && emptyCount == 2) return 4;
+
+    if (aiCount == 2 && emptyCount == 2) return -4;
+    if (aiCount == 3 && emptyCount == 1) return -6;
+    if (aiCount == 4) return -10;
+}
