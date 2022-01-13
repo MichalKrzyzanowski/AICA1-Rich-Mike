@@ -121,7 +121,7 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_currentState == AI_TURN)
 	{
-		m_aiAlg.executeMove(&m_window, m_boards, &m_ai, m_currentState, m_difficulty);
+		m_aiAlg.executeMove(m_boards, &m_ai, m_currentState, m_difficulty);
 		if (m_ai.checkWin(m_boards))
 		{
 			m_gameOverText.setString("AI Wins!");

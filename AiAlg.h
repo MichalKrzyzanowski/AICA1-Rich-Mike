@@ -5,6 +5,9 @@
 
 class Game;
 
+/// <summary>
+/// a struct that holds all of the information of a move such as it's position and score
+/// </summary>
 struct Move
 {
 	Move() : score{ 0 } {};
@@ -14,11 +17,14 @@ struct Move
 	int x, y, z;
 };
 
+/// <summary>
+/// controls the AI and performs it's moves
+/// </summary>
 class AiAlg
 {
 public:
 	AiAlg() {};
-	Move executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState, int t_difficulty);
+	Move executeMove(std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState, int t_difficulty);
 
 private:
 	Move getBestMove(GameState t_currentState, std::array<Board*, 4> t_boards, Piece * t_piece, int t_depth, Move t_move);
@@ -32,7 +38,7 @@ private:
 	int evaluate3DStack(Move* currentMove, std::array<Board*, 4> boards);
 	int calculateEvalScore(int playerCount, int aiCount, int emptyCount);
 	int compareScores(GameState t_currentState, int tempScore, int finalScore);
-	int const MAX_DEPTH = 1;
+	int MAX_DEPTH = 1;
 	std::vector<Move> moves;
 };
 

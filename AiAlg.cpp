@@ -1,6 +1,14 @@
 #include "AiAlg.h"
 
-Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState, int t_difficulty)
+/// <summary>
+/// Finds and performs the best move available to the AI.
+/// </summary>
+/// <param name="t_boards">all the playable boards in the game.</param>
+/// <param name="t_piece">the current piece being placed, player being red and the AI yellow.</param>
+/// <param name="t_currentState">the current state of the game such as who's turn or win it is.</param>
+/// <param name="t_difficulty">the maximum depth selected for the difficulty, normal by default.</param>
+/// <returns>the move performed</returns>
+Move AiAlg::executeMove(std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState, int t_difficulty)
 {
     MAX_DEPTH = t_difficulty;
     Move bestMove = getBestMove(t_currentState, t_boards, t_piece, 0, Move());
@@ -10,6 +18,15 @@ Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boar
     return bestMove;
 }
 
+/// <summary>
+/// Loops through the boards tofind all the available moves and pick the best one at that moment.
+/// </summary>
+/// <param name="t_currentState">the current piece being placed, player being red and the AI yellow.</param>
+/// <param name="t_boards">all the playable boards in the game.</param>
+/// <param name="t_piece">the current piece being placed, player being red and the AI yellow.</param>
+/// <param name="t_depth">how many layers deep the AI searches for its next move</param>
+/// <param name="t_move">the current move being looked at and evaluated.</param>
+/// <returns>move to be performed</returns>
 Move AiAlg::getBestMove(GameState t_currentState, std::array<Board*, 4> t_boards, Piece* t_piece, int t_depth, Move t_move)
 {
     if (t_currentState == AI_WIN)
