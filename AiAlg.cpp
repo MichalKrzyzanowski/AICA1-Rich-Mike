@@ -1,6 +1,6 @@
-#include "AI.h"
+#include "AiAlg.h"
 
-Move AI::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, Game::GameState& t_currentState)
+Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState)
 {
     Move bestMove = getBestMove(t_currentState, t_boards, 0, Move());
     t_boards.at(bestMove.z)->getTile(bestMove.x, bestMove.y)->owner() = t_piece->type();
@@ -9,13 +9,13 @@ Move AI::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards,
     return bestMove;
 }
 
-Move AI::getBestMove(Game::GameState& t_currentState, std::array<Board*, 4> t_boards, int t_depth, Move t_move)
+Move AiAlg::getBestMove(GameState& t_currentState, std::array<Board*, 4> t_boards, int t_depth, Move t_move)
 {
-    if (t_currentState == Game::AI_WIN)
+    if (t_currentState == AI_WIN)
     {
         return Move(10 - t_depth);
     }
-    else if (t_currentState == Game::PLAYER_WIN)
+    else if (t_currentState == PLAYER_WIN)
     {
         return Move(t_depth - 10);
     }
@@ -44,12 +44,12 @@ Move AI::getBestMove(Game::GameState& t_currentState, std::array<Board*, 4> t_bo
                     move.y = y;
                     move.z = z;
 
-                    if (t_currentState == Game::PLAYER_TURN)
+                    if (t_currentState == PLAYER_TURN)
                     {
                         t_boards.at(z)->getTile(x, y)->owner() = PieceCheck::PLAYER;
                         move.score = getBestMove(t_currentState, t_boards, t_depth + 1, move).score;
                     }
-                    if (t_currentState == Game::AI_TURN)
+                    if (t_currentState == AI_TURN)
                     {
                         t_boards.at(z)->getTile(x, y)->owner() = PieceCheck::AI;
                         move.score = getBestMove(t_currentState, t_boards, t_depth + 1, move).score;
@@ -63,7 +63,7 @@ Move AI::getBestMove(Game::GameState& t_currentState, std::array<Board*, 4> t_bo
     }
 
     int bestMove = 0;
-    if (t_currentState == Game::PLAYER_TURN)
+    if (t_currentState == PLAYER_TURN)
     {
         int bestScore = -100000;
         for (size_t i = 0; i < moves.size(); i++)

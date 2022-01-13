@@ -30,7 +30,7 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AI.cpp">
+    <ClCompile Include="AiAlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="Tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PieceCheck.h">
+    <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AI.h">
+    <ClInclude Include="AiAlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

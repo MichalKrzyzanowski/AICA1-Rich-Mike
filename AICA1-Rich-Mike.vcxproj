@@ -143,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="AiAlg.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,11 +151,11 @@
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AI.h" />
+    <ClInclude Include="AiAlg.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Piece.h" />
-    <ClInclude Include="PieceCheck.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

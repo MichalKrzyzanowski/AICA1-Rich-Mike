@@ -3,7 +3,7 @@
 
 #include <array>
 #include "Piece.h"
-#include "PieceCheck.h"
+#include "Globals.h"
 #include "Tile.h"
 #include <SFML/Graphics.hpp>
 

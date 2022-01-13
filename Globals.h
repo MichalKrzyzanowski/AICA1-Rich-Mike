@@ -8,5 +8,14 @@ enum class PieceCheck
 	NONE
 };
 
+enum GameState
+{
+	PLAYER_TURN,
+	AI_TURN,
+	PLAYER_WIN,
+	AI_WIN,
+	NONE,
+};
+
 #endif // !PIECE_CHECK_H
 

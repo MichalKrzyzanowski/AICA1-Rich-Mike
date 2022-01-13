@@ -2,7 +2,7 @@
 #define TILE_H
 
 #include <SFML/Graphics.hpp>
-#include "PieceCheck.h"
+#include "Globals.h"
 
 class Tile
 {
