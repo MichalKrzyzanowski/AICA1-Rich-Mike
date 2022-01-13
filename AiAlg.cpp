@@ -2,22 +2,22 @@
 
 Move AiAlg::executeMove(sf::RenderWindow* t_window, std::array<Board*, 4> t_boards, Piece* t_piece, GameState& t_currentState)
 {
-    Move bestMove = getBestMove(t_currentState, t_boards, 0, Move());
+    Move bestMove = getBestMove(t_currentState, t_boards, t_piece, 0, Move());
     t_boards.at(bestMove.z)->getTile(bestMove.x, bestMove.y)->owner() = t_piece->type();
     t_piece->addPosition(PieceData{ (unsigned int)bestMove.x, (unsigned int)bestMove.y, bestMove.z });
     moves.clear();
     return bestMove;
 }
 
-Move AiAlg::getBestMove(GameState& t_currentState, std::array<Board*, 4> t_boards, int t_depth, Move t_move)
+Move AiAlg::getBestMove(GameState t_currentState, std::array<Board*, 4> t_boards, Piece* t_piece, int t_depth, Move t_move)
 {
     if (t_currentState == AI_WIN)
     {
-        return Move(10 - t_depth);
+        return Move(1000 - t_depth);
     }
     else if (t_currentState == PLAYER_WIN)
     {
-        return Move(t_depth - 10);
+        return Move(t_depth - 1000);
     }
 
     if (t_depth >= MAX_DEPTH)
@@ -47,12 +47,12 @@ Move AiAlg::getBestMove(GameState& t_currentState, std::array<Board*, 4> t_board
                     if (t_currentState == PLAYER_TURN)
                     {
                         t_boards.at(z)->getTile(x, y)->owner() = PieceCheck::PLAYER;
-                        move.score = getBestMove(t_currentState, t_boards, t_depth + 1, move).score;
+                        move.score = getBestMove(GameState::AI_TURN, t_boards, t_piece, t_depth + 1, move).score;
                     }
                     if (t_currentState == AI_TURN)
                     {
                         t_boards.at(z)->getTile(x, y)->owner() = PieceCheck::AI;
-                        move.score = getBestMove(t_currentState, t_boards, t_depth + 1, move).score;
+                        move.score = getBestMove(GameState::PLAYER_TURN, t_boards, t_piece, t_depth + 1, move).score;
                     }
 
                     moves.push_back(move);
@@ -91,12 +91,17 @@ Move AiAlg::getBestMove(GameState& t_currentState, std::array<Board*, 4> t_board
     return moves[bestMove];
 }
 
-int AiAlg::evaluate(Move* currentMove, std::array<Board*, 4> boards)
+int AiAlg::evaluate(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
-    int tempScore{};
+    int finalScore{};
 
-    tempScore = evaluate3DHorizontal(currentMove, boards);
-
+    finalScore = compareScores(t_currentState, evaluateHorizontal(currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluateVertical(currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluateDiagonal(t_currentState, currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluate3DHorizontal(t_currentState, currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluate3DVertical(t_currentState, currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluate3DDiagonal(t_currentState, currentMove, boards), finalScore);
+    finalScore = compareScores(t_currentState, evaluate3DStack(currentMove, boards), finalScore);
 }
 
 int AiAlg::evaluateHorizontal(Move* currentMove, std::array<Board*, 4> boards)
@@ -147,29 +152,338 @@ int AiAlg::evaluateVertical(Move* currentMove, std::array<Board*, 4> boards)
     return calculateEvalScore(playerCount, aiCount, emptyCount);
 }
 
-int AiAlg::evaluateDiagonal(Move* currentMove, std::array<Board*, 4> boards)
+int AiAlg::evaluateDiagonal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
-    return 0;
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    int firstScore, secondScore;
+
+    if (boards[currentMove->z]->owner(0, 0) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(1, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(2, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(3, 3) == PieceCheck::AI) ++aiCount;
+
+    if (boards[currentMove->z]->owner(0, 0) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(1, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(2, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(3, 3) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[currentMove->z]->owner(0, 0) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(1, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(2, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(3, 3) == PieceCheck::NONE) ++emptyCount;
+
+    firstScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[currentMove->z]->owner(0, 3) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(1, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(2, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[currentMove->z]->owner(3, 0) == PieceCheck::AI) ++aiCount;
+
+    if (boards[currentMove->z]->owner(0, 3) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(1, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(2, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[currentMove->z]->owner(3, 0) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[currentMove->z]->owner(0, 3) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(1, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(2, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[currentMove->z]->owner(3, 0) == PieceCheck::NONE) ++emptyCount;
+
+    secondScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (t_currentState == PLAYER_TURN)
+    {
+        if (secondScore > firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
+
+    else
+    {
+        if (secondScore < firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
 }
 
-int AiAlg::evaluate3DHorizontal(Move* currentMove, std::array<Board*, 4> boards)
+int AiAlg::evaluate3DHorizontal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
-    return 0;
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    int firstScore, secondScore;
+
+    if (boards[0]->owner(0, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(1, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(2, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(3, currentMove->y) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(0, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(1, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(2, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(3, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(0, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(1, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(2, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(3, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+
+    firstScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[0]->owner(3, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(2, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(1, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(0, currentMove->y) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(3, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(2, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(1, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(0, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(3, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(2, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(1, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(0, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+
+    secondScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (t_currentState == PLAYER_TURN)
+    {
+        if (secondScore > firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
+
+    else
+    {
+        if (secondScore < firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
 }
 
-int AiAlg::evaluate3DVertical(Move* currentMove, std::array<Board*, 4> boards)
+int AiAlg::evaluate3DVertical(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
-    return 0;
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    int firstScore, secondScore;
+
+    if (boards[0]->owner(currentMove->x, 0) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(currentMove->x, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(currentMove->x, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(currentMove->x, 3) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(currentMove->x, 0) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(currentMove->x, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(currentMove->x, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(currentMove->x, 3) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(currentMove->x, 0) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(currentMove->x, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(currentMove->x, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(currentMove->x, 3) == PieceCheck::NONE) ++emptyCount;
+
+    firstScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[0]->owner(currentMove->x, 3) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(currentMove->x, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(currentMove->x, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(currentMove->x, 0) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(currentMove->x, 3) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(currentMove->x, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(currentMove->x, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(currentMove->x, 0) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(currentMove->x, 3) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(currentMove->x, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(currentMove->x, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(currentMove->x, 0) == PieceCheck::NONE) ++emptyCount;
+
+    secondScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (t_currentState == PLAYER_TURN)
+    {
+        if (secondScore > firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
+
+    else
+    {
+        if (secondScore < firstScore)
+        {
+            return secondScore;
+        }
+        else
+        {
+            return firstScore;
+        }
+    }
 }
 
-int AiAlg::evaluate3DDiagonal(Move* currentMove, std::array<Board*, 4> boards)
+int AiAlg::evaluate3DDiagonal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
-    return 0;
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    int firstScore, secondScore, thirdScore, fourthScore, tempScore;
+
+    if (boards[0]->owner(0, 0) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(1, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(2, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(3, 3) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(0, 0) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(1, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(2, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(3, 3) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(0, 0) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(1, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(2, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(3, 3) == PieceCheck::NONE) ++emptyCount;
+
+    firstScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[0]->owner(3, 3) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(2, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(1, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(0, 0) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(3, 3) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(2, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(1, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(0, 0) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(3, 3) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(2, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(1, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(0, 0) == PieceCheck::NONE) ++emptyCount;
+
+    secondScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[0]->owner(0, 3) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(1, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(2, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(3, 0) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(0, 3) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(1, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(2, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(3, 0) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(0, 3) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(1, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(2, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(3, 0) == PieceCheck::NONE) ++emptyCount;
+
+    thirdScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (boards[0]->owner(3, 0) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(2, 1) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(1, 2) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(0, 3) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(3, 0) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(2, 1) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(1, 2) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(0, 3) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(3, 0) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(2, 1) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(1, 2) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(0, 3) == PieceCheck::NONE) ++emptyCount;
+
+    fourthScore = calculateEvalScore(playerCount, aiCount, emptyCount);
+
+    if (t_currentState == PLAYER_TURN)
+    {
+        if (secondScore > firstScore)
+        {
+            tempScore = secondScore;
+        }
+        else
+        {
+            tempScore = firstScore;
+        }
+
+        if (thirdScore > tempScore) tempScore = thirdScore;
+        if (fourthScore > tempScore) tempScore = fourthScore;
+    }
+
+    else
+    {
+        if (secondScore < firstScore)
+        {
+            tempScore = secondScore;
+        }
+        else
+        {
+            tempScore = firstScore;
+        }
+
+        if (thirdScore < tempScore) tempScore = thirdScore;
+        if (fourthScore < tempScore) tempScore = fourthScore;
+    }
+
+    return tempScore;
 }
 
 int AiAlg::evaluate3DStack(Move* currentMove, std::array<Board*, 4> boards)
 {
-    return 0;
+    int playerCount{};
+    int aiCount{};
+    int emptyCount{};
+
+    if (boards[0]->owner(currentMove->x, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[1]->owner(currentMove->x, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[2]->owner(currentMove->x, currentMove->y) == PieceCheck::AI) ++aiCount;
+    if (boards[3]->owner(currentMove->x, currentMove->y) == PieceCheck::AI) ++aiCount;
+
+    if (boards[0]->owner(currentMove->x, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[1]->owner(currentMove->x, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[2]->owner(currentMove->x, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+    if (boards[3]->owner(currentMove->x, currentMove->y) == PieceCheck::PLAYER) ++playerCount;
+
+    if (boards[0]->owner(currentMove->x, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[1]->owner(currentMove->x, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[2]->owner(currentMove->x, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+    if (boards[3]->owner(currentMove->x, currentMove->y) == PieceCheck::NONE) ++emptyCount;
+
+    return calculateEvalScore(playerCount, aiCount, emptyCount);
 }
 
 int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
@@ -181,4 +495,31 @@ int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
     if (aiCount == 2 && emptyCount == 2) return -4;
     if (aiCount == 3 && emptyCount == 1) return -6;
     if (aiCount == 4) return -10;
+}
+
+int AiAlg::compareScores(GameState t_currentState, int tempScore, int finalScore)
+{
+    if (t_currentState == PLAYER_TURN)
+    {
+        if (finalScore > tempScore)
+        {
+            return finalScore;
+        }
+        else
+        {
+            return tempScore;
+        }
+    }
+
+    else
+    {
+        if (finalScore < tempScore)
+        {
+            return finalScore;
+        }
+        else
+        {
+            return tempScore;
+        }
+    }
 }
