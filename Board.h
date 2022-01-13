@@ -7,6 +7,9 @@
 #include "Tile.h"
 #include <SFML/Graphics.hpp>
 
+/// <summary>
+/// class that represents a single game board
+/// </summary>
 class Board
 {
 private:
@@ -16,7 +19,6 @@ private:
 
 public:
 	Board(int index);
-	void update(sf::Time dt, sf::RenderWindow* window);
 	bool placement(sf::RenderWindow* window, Piece* piece);
 	void render(sf::RenderWindow* window);
 	void resetOwner();

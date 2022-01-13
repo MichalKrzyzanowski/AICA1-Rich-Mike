@@ -91,6 +91,13 @@ Move AiAlg::getBestMove(GameState t_currentState, std::array<Board*, 4> t_boards
     return moves[bestMove];
 }
 
+/// <summary>
+/// function that evaluates any move past the depth limit.
+/// </summary>
+/// <param name="t_currentState">who's turn it is</param>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evealuated final score</returns>
 int AiAlg::evaluate(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
     int finalScore{};
@@ -106,6 +113,13 @@ int AiAlg::evaluate(GameState t_currentState, Move* currentMove, std::array<Boar
     return finalScore;
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the horizontal winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from horizontal winning conditions</returns>
 int AiAlg::evaluateHorizontal(Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -130,6 +144,13 @@ int AiAlg::evaluateHorizontal(Move* currentMove, std::array<Board*, 4> boards)
     return calculateEvalScore(playerCount, aiCount, emptyCount);
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the vertical winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from vertical winning conditions</returns>
 int AiAlg::evaluateVertical(Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -154,6 +175,13 @@ int AiAlg::evaluateVertical(Move* currentMove, std::array<Board*, 4> boards)
     return calculateEvalScore(playerCount, aiCount, emptyCount);
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the diagonal winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from diagonal winning conditions</returns>
 int AiAlg::evaluateDiagonal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -208,7 +236,7 @@ int AiAlg::evaluateDiagonal(GameState t_currentState, Move* currentMove, std::ar
         }
     }
 
-    else
+    else if (t_currentState == AI_TURN)
     {
         if (secondScore < firstScore)
         {
@@ -219,8 +247,20 @@ int AiAlg::evaluateDiagonal(GameState t_currentState, Move* currentMove, std::ar
             return firstScore;
         }
     }
+
+    else
+    {
+        return 0;
+    }
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the 3D horizontal winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from 3D horizontal winning conditions</returns>
 int AiAlg::evaluate3DHorizontal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -275,7 +315,7 @@ int AiAlg::evaluate3DHorizontal(GameState t_currentState, Move* currentMove, std
         }
     }
 
-    else
+    else if (t_currentState == AI_TURN)
     {
         if (secondScore < firstScore)
         {
@@ -286,8 +326,20 @@ int AiAlg::evaluate3DHorizontal(GameState t_currentState, Move* currentMove, std
             return firstScore;
         }
     }
+
+    else
+    {
+        return 0;
+    }
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the 3D vertical winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from 3D vertical winning conditions</returns>
 int AiAlg::evaluate3DVertical(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -342,7 +394,7 @@ int AiAlg::evaluate3DVertical(GameState t_currentState, Move* currentMove, std::
         }
     }
 
-    else
+    else if (t_currentState == AI_TURN)
     {
         if (secondScore < firstScore)
         {
@@ -353,15 +405,27 @@ int AiAlg::evaluate3DVertical(GameState t_currentState, Move* currentMove, std::
             return firstScore;
         }
     }
+
+    else
+    {
+        return 0;
+    }
 }
 
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the 3D diagonal winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from 3D diagonal winning conditions</returns>
 int AiAlg::evaluate3DDiagonal(GameState t_currentState, Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
     int aiCount{};
     int emptyCount{};
 
-    int firstScore, secondScore, thirdScore, fourthScore, tempScore;
+    int firstScore, secondScore, thirdScore, fourthScore, tempScore{};
 
     if (boards[0]->owner(0, 0) == PieceCheck::AI) ++aiCount;
     if (boards[1]->owner(1, 1) == PieceCheck::AI) ++aiCount;
@@ -446,7 +510,7 @@ int AiAlg::evaluate3DDiagonal(GameState t_currentState, Move* currentMove, std::
         if (fourthScore > tempScore) tempScore = fourthScore;
     }
 
-    else
+    else if (t_currentState == AI_TURN)
     {
         if (secondScore < firstScore)
         {
@@ -464,6 +528,14 @@ int AiAlg::evaluate3DDiagonal(GameState t_currentState, Move* currentMove, std::
     return tempScore;
 }
 
+
+/// <summary>
+/// sub-function of evaluate().
+/// generates best score based on the 3D stack winning conditions.
+/// </summary>
+/// <param name="currentMove">current move in the minimax algorithm</param>
+/// <param name="boards">vector of game boards</param>
+/// <returns>evaluated score from 3D stack winning conditions</returns>
 int AiAlg::evaluate3DStack(Move* currentMove, std::array<Board*, 4> boards)
 {
     int playerCount{};
@@ -488,6 +560,14 @@ int AiAlg::evaluate3DStack(Move* currentMove, std::array<Board*, 4> boards)
     return calculateEvalScore(playerCount, aiCount, emptyCount);
 }
 
+/// <summary>
+/// function that calculates what score should be returned.
+/// based on the amount of ai, player, & empty pieces on the game boards.
+/// </summary>
+/// <param name="playerCount">amount of player pieces</param>
+/// <param name="aiCount">amount of ai pieces</param>
+/// <param name="emptyCount">amount of empty pieces</param>
+/// <returns>evaluated score</returns>
 int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
 {
     if (playerCount == 4) return 10;
@@ -499,8 +579,17 @@ int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
     if (aiCount == 2 && emptyCount == 2) return -4;
     if (aiCount == 3 && emptyCount == 1) return -6;
     if (aiCount == 4) return -10;
+
+    return 0;
 }
 
+/// <summary>
+/// compares the final score with any of the scores returned from the evaluation sub-functions.
+/// </summary>
+/// <param name="t_currentState">who's turn it is</param>
+/// <param name="tempScore">evaluation sub-function returned score</param>
+/// <param name="finalScore">ongoing score calculated in the main evaluation function</param>
+/// <returns>higher/lower score, based on current state</returns>
 int AiAlg::compareScores(GameState t_currentState, int tempScore, int finalScore)
 {
     if (t_currentState == PLAYER_TURN)
@@ -515,7 +604,7 @@ int AiAlg::compareScores(GameState t_currentState, int tempScore, int finalScore
         }
     }
 
-    else
+    else if (t_currentState == AI_TURN)
     {
         if (finalScore < tempScore)
         {
@@ -525,5 +614,10 @@ int AiAlg::compareScores(GameState t_currentState, int tempScore, int finalScore
         {
             return tempScore;
         }
+    }
+
+    else
+    {
+        return 0;
     }
 }
