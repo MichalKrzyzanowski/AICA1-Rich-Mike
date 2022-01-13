@@ -27,7 +27,8 @@ var NAVTREE =
   [ "4Tec MinMax", "index.html", [
     [ "AICA1-Rich-Mike", "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html", [
       [ "Richards Work", "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md1", null ],
-      [ "Mikes Work", "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md2", null ]
+      [ "Mikes Work", "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md2", null ],
+      [ "Note: to change the difficulty, press Num 1 for Normal or Num 2 for Hard", "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md3", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

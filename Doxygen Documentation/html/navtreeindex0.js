@@ -36,6 +36,7 @@ var NAVTREEINDEX0 =
 "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html":[0],
 "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md1":[0,0],
 "md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md2":[0,1],
+"md__c___users_andri__desktop__fourth__year__a_i_c_a1__rich__mike__r_e_a_d_m_e.html#autotoc_md3":[0,2],
 "pages.html":[],
 "struct_move.html":[1,0,3],
 "struct_piece_data.html":[1,0,5]

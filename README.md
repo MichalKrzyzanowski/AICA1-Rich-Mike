@@ -9,3 +9,5 @@
 - Internal World Representation
 - Player Interface
 - Evaluation Function
+
+## Note: to change the difficulty, press Num 1 for Normal or Num 2 for Hard
