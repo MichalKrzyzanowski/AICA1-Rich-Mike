@@ -103,11 +103,6 @@ int AiAlg::evaluate(GameState t_currentState, Move* currentMove, std::array<Boar
     finalScore = compareScores(t_currentState, evaluate3DDiagonal(t_currentState, currentMove, boards), finalScore);
     finalScore = compareScores(t_currentState, evaluate3DStack(currentMove, boards), finalScore);
 
-    if (finalScore > 0)
-    {
-        printf("YES!!");
-    }
-
     return finalScore;
 }
 
@@ -498,7 +493,9 @@ int AiAlg::calculateEvalScore(int playerCount, int aiCount, int emptyCount)
     if (playerCount == 4) return 10;
     if (playerCount == 3 && emptyCount == 1) return 6;
     if (playerCount == 2 && emptyCount == 2) return 4;
+    if (playerCount == 1 && emptyCount == 3) return 2;
 
+    if (aiCount == 1 && emptyCount == 3) return -2;
     if (aiCount == 2 && emptyCount == 2) return -4;
     if (aiCount == 3 && emptyCount == 1) return -6;
     if (aiCount == 4) return -10;
