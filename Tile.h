@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 
+/// <summary>
+/// class that represents a single tile in any given board
+/// </summary>
 class Tile
 {
 private:

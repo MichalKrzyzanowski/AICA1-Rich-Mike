@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 
+/// <summary>
+/// data of a placeable piece
+/// </summary>
 struct PieceData
 {
 	unsigned row;
@@ -13,6 +16,9 @@ struct PieceData
 
 class Board;
 
+/// <summary>
+/// class that allows the user/ai to place a piece on any board
+/// </summary>
 class Piece
 {
 private:
