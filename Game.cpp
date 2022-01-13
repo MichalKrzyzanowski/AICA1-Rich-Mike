@@ -7,7 +7,8 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 700, 600 }, "SFML Starter" }, m_player{ sf::Color::Red, 75, PieceCheck::PLAYER }, m_ai{ sf::Color::Yellow, 75, PieceCheck::AI }
 {
 	m_font.loadFromFile("Assets/CaviarDreams.ttf");
-
+	
+	// initialization of the boards.
 	int boardIndex{};
 	for (auto& board : m_boards)
 	{
@@ -15,6 +16,7 @@ Game::Game() :
 		++boardIndex;
 	}
 
+	// UI setup
 	for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
 	{
 		m_boardSwitchButtons[i].setFillColor(sf::Color::White);
@@ -162,6 +164,7 @@ void Game::update(sf::Time t_deltaTime)
 			}
 		}
 
+		// check if any of the board switch buttons have been clicked
 		for (size_t i = 0; i < m_boardSwitchButtons.size(); i++)
 		{
 			if (m_boardSwitchButtons[i].getGlobalBounds().contains(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window))))
@@ -178,6 +181,7 @@ void Game::update(sf::Time t_deltaTime)
 	}
 	else if (m_currentState == PLAYER_WIN)
 	{
+		// check if restart button was pressed
 		if (m_restartButton.getGlobalBounds().contains(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window))))
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
